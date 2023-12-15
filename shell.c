@@ -23,7 +23,8 @@ int main(void)
 		while (1)
 		{
 			printf("$: ");
-			if (fgets(input, sizeof(input), stdin) == NULL);
+
+			if (fgets(input, sizeof(input), stdin) == NULL)
 			{
 				break;
 			}
