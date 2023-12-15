@@ -8,8 +8,10 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
-void executeCommand(char *command);
-
+/**
+ * main - takes user input
+ * Return: 0
+ */
 int main(void)
 {
 	char input[MAX_COMMAND_LENGTH];
@@ -31,9 +33,13 @@ int main(void)
 		executeCommand(input);
 	}
 
-	return 0;
+	return (0);
 }
 
+/**
+ * executeCommand - executes desired command
+ * @command: the desired command
+ */
 void executeCommand(char *command)
 {
 	pid_t pid;
