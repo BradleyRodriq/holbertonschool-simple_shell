@@ -8,6 +8,8 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
+void executeCommand(char *command);
+
 /**
  * main - takes user input
  * Return: 0
@@ -16,23 +18,38 @@ int main(void)
 {
 	char input[MAX_COMMAND_LENGTH];
 
-	while (1)
+	if (isatty(fileno(stdin)))
 	{
-		printf("$: ");
-		fgets(input, sizeof(input), stdin);
-
-
-		input[strcspn(input, "\n")] = '\0';
-
-		if (strcmp(input, "exit") == 0)
+		while (1)
 		{
+			printf("$: ");
+			if (fgets(input, sizeof(input), stdin) == NULL);
+			{
+				break;
+			}
+			input[strcspn(input, "\n")] = '\0';
 
-			break;
+			if (strcmp(input, "exit") == 0)
+			{
+
+				break;
+			}
+			executeCommand(input);
 		}
-
-		executeCommand(input);
 	}
+	else
+	{
+		while (fgets(input, sizeof(input), stdin) != NULL)
+		{
+			input[strcspn(input, "\n")] = '\0';
 
+			if (strcmp(input, "exit") == 0)
+			{
+				break;
+			}
+			executeCommand(input);
+		}
+	}
 	return (0);
 }
 
