@@ -1,23 +1,5 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 
 <!-- PROJECT LOGO -->
 <br />
@@ -32,13 +14,6 @@
     A homemade shell 
     <br />
     <a href="https://github.com/BradleyRodriq/holbertonschool-simple_shell/"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <!-- <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a> -->
   </p>
 </div>
 
@@ -75,24 +50,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-
-
-<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
 A simulation of a linux base shell made with C. Enjoy! :)
-<!-- 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url] -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+</br>
 
 
 <!-- GETTING STARTED -->
@@ -108,59 +69,44 @@ The code was made using C, therefore the only prerequisites will be the compiler
 ### Installation & Run it
 If you want to try the project follow the next steps.
 
+
 1. Clone the repo
 
     ```sh
     git clone https://github.com/BradleyRodriq/holbertonschool-simple_shell.git
     ```
 
-2. If you have GCC copy the command
+2. Compiler command
 
     ```sh
     gcc -Wall -Werror -pedantic shell.c -o shell
    ```
+3. Run _.exec_
+    ```sh
+    ./shell
+   ```
+</br>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- CODE EXPLANATION -->
+##  Code
+
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
 Use the project for educational purposes and for no comercial purposes.
 
 
-
-<!-- ROADMAP -->
-<!-- ## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
- -->
-
 <!-- LICENSE -->
 ## License
-
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
-## Contact
+## Authors
 
-jahzserrano repo - [@your_twitter](https://twitter.com/your_username) - email@example.com
+- Bradley Rodriguez 
+- Jahaziel A. Serrano
+- Luis Rivera
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
