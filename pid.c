@@ -9,6 +9,7 @@
 int main(void)
 {
 	long max_pid = sysconf(_SC_CHILD_MAX);
+
 	printf("Maximum PID: %ld\n", max_pid);
 
 	return (0);
