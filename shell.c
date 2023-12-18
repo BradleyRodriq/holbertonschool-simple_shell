@@ -16,7 +16,8 @@ void executeCommand(char *command);
  */
 int main(void)
 {
-	char input[MAX_COMMAND_LENGTH];
+	char *input = NULL;
+	size_t input_size = 0;
 
 	if (isatty(fileno(stdin)))
 	{
@@ -24,7 +25,7 @@ int main(void)
 		{
 			printf("$: ");
 
-			if (fgets(input, sizeof(input), stdin) == NULL)
+			if (getline(&input, &input_size, stdin) == -1)
 			{
 				break;
 			}
@@ -40,7 +41,7 @@ int main(void)
 	}
 	else
 	{
-		while (fgets(input, sizeof(input), stdin) != NULL)
+		while (getline(&input, &input_size, stdin) != -1)
 		{
 			input[strcspn(input, "\n")] = '\0';
 
@@ -51,6 +52,7 @@ int main(void)
 			executeCommand(input);
 		}
 	}
+	free(input);
 	return (0);
 }
 
@@ -99,4 +101,3 @@ void executeCommand(char *command)
 		}
 	}
 }
-
