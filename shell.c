@@ -27,6 +27,7 @@ int main(void)
 
 			if (getline(&input, &input_size, stdin) == -1)
 			{
+				perror("Error reading input");
 				break;
 			}
 			input[strcspn(input, "\n")] = '\0';
