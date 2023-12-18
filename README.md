@@ -18,7 +18,6 @@
 </div>
 
 
-
 <!-- TABLE OF CONTENTS -->
 <!-- <details>
   <summary>Table of Contents</summary>
@@ -60,7 +59,6 @@ A simulation of a linux base shell made with C. Enjoy! :)
 ## Getting Started
 
 
-
 ### Prerequisites
 The code was made using C, therefore the only prerequisites will be the compiler gcc (recomended) or a compiler of your preferences.
 
@@ -95,7 +93,7 @@ If you want to try the project follow the next steps.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-Use the project for educational purposes and for no comercial purposes.
+Use the project just for educational purposes only 
 
 
 <!-- LICENSE -->
@@ -104,9 +102,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Authors
-
-- Bradley Rodriguez 
-- Jahaziel A. Serrano
-- Luis Rivera
+- Brandley Rodriguez <bradley.rodriguez2@yahoo.com>
+- Jahaziel A. Serrano <serranojahaziel2@gmail.com>
+- Luis Rivera 
 
 
