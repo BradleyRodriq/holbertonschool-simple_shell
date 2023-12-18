@@ -8,6 +8,12 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
+/**
+ * main - A main function to start the code.
+ * @command: A parameter using pointer.
+ *
+ * Return: to 0.
+ */
 void executeCommand(char *command);
 
 int main(void)
@@ -22,7 +28,7 @@ int main(void)
 
 		input[strcspn(input, "\n")] = '\0';
 
-		if (strcmp(input, "exit") == 0)
+		if (strcmp(input, "") == 0)
 		{
 
 			break;
@@ -31,9 +37,15 @@ int main(void)
 		executeCommand(input);
 	}
 
-	return 0;
+	return (0);
 }
 
+/**
+ * executeCommand - A function to get input
+ * @command: A parameter using pointer.
+ *
+ * Return: 0.
+ */
 void executeCommand(char *command)
 {
 	pid_t pid;
