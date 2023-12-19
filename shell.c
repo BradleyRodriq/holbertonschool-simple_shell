@@ -5,7 +5,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <signal.h>
-extern char **environ;
+#include "environment.h"
 
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
