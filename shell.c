@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <signal.h>
 
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
@@ -23,7 +24,7 @@ int main(void)
 
 	signal(SIGINT, handleCtrlC);
 
-	if (isatty(fileno(stdin)))
+	if (isatty(STDIN_FILENO))
 	{
 		while (1)
 		{
@@ -37,7 +38,6 @@ int main(void)
 
 			if (strcmp(input, "exit") == 0)
 			{
-
 				break;
 			}
 			executeCommand(input);
@@ -113,8 +113,9 @@ void executeCommand(char *command)
 void handleCtrlC(int signum)
 {
 	(void) signum;
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
 	open_prompt();
+	fflush(stdout);
 }
 
  /**
@@ -124,5 +125,5 @@ void handleCtrlC(int signum)
 
 void open_prompt(void)
 {
-	printf("$ ");
+	printf("OzoneLayer$: ");
 }
