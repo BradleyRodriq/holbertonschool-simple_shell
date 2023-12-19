@@ -9,6 +9,8 @@
 #define MAX_ARGUMENTS 10
 
 void executeCommand(char *command);
+void handleCtrlC(int signum);
+void open_prompt(void);
 
 /**
  * main - takes user input
@@ -19,15 +21,16 @@ int main(void)
 	char *input = NULL;
 	size_t input_size = 0;
 
+	signal(SIGINT, handleCtrlC);
+
 	if (isatty(fileno(stdin)))
 	{
 		while (1)
 		{
-			printf("$: ");
+			open_prompt();
 
 			if (getline(&input, &input_size, stdin) == -1)
 			{
-				printf("\n");
 				break;
 			}
 			input[strcspn(input, "\n")] = '\0';
@@ -101,4 +104,25 @@ void executeCommand(char *command)
 			exit(EXIT_FAILURE);
 		}
 	}
+}
+
+/**
+ * handleCtrlC - handle Ctrl+C signal
+ * @signum: signal number
+ */
+void handleCtrlC(int signum)
+{
+	(void) signum;
+	printf("\n");
+	open_prompt();
+}
+
+ /**
+  * open_prompt - function that opens prompt
+  * Return: returns nothing
+  */
+
+void open_prompt(void)
+{
+	printf("$ ");
 }
