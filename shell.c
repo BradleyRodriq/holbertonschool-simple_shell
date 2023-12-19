@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <signal.h>
+extern char **environ;
 
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
@@ -90,7 +91,32 @@ void executeCommand(char *command)
 		}
 
 		args[i] = NULL;
-		if (execvp(args[0], args) == -1)
+
+		if (strcmp(args[0], "ls") == 0)
+		{
+			execve("/usr/bin/ls", args, environ);
+		}
+		else if (strcmp(args[0], "env") == 0)
+		{
+			execve("/usr/bin/env", args, environ);
+		}
+		else if (strcmp(args[0], "touch") == 0)
+		{
+			execve("/usr/bin/touch", args, environ);
+		}
+		else if (strcmp(args[0], "rm") == 0)
+		{
+			execve("/bin/rm", args, environ);
+		}
+		else if (strcmp(args[0], "pwd") == 0)
+		{
+			execve("/bin/pwd", args, environ);
+		}
+		else
+		{
+			execve(args[0], args, environ);
+		}
+		if (execve(args[0], args, environ) == -1)
 		{
 			perror("Error executing command");
 			exit(EXIT_FAILURE);
@@ -115,15 +141,15 @@ void handleCtrlC(int signum)
 	(void) signum;
 	write(STDOUT_FILENO, "\n", 1);
 	open_prompt();
-	fflush(stdout);
 }
 
- /**
-  * open_prompt - function that opens prompt
-  * Return: returns nothing
-  */
+/**
+ * open_prompt - function that opens prompt
+ * Return: returns nothing
+ */
 
 void open_prompt(void)
 {
 	printf("OzoneLayer$: ");
+	fflush(stdout);
 }
