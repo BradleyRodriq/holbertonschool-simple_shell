@@ -153,3 +153,4 @@ void open_prompt(void)
 	printf("OzoneLayer$: ");
 	fflush(stdout);
 }
+
