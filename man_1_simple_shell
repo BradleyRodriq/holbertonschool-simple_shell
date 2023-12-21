@@ -1,0 +1,21 @@
+.TH shell "12/18/2023" "1.0.0" "A Shell Emulator"
+.SH shell
+shell \- is a C Program that emulates a linux base shell. It can perfom ls, pwd, topuch & echoa a the moment. 
+
+.SH SYNOPSIS
+void executeCommand(char *command);
+
+.SH DESCRIPTION
+shell is a C Program that emulates a linux base shell. After comiplation type ./shell. Then use any command listed.
+- ls :- display a list of files
+- pwd :- dispay the current working directiry
+- touch [file_name] :- create a empty file
+- echo [message] :- display message 
+
+.SH AUTHOR
+Brandley Rodriguez <bradley.rodriguez2@yahoo.com>
+Jahaziel A. Serrano <serranojahaziel2@gmail.com>
+Luis Rivera <__>
+
+.SH BUGS
+cd [command] :- It do not perfom as intended
