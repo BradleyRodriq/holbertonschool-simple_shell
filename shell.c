@@ -69,13 +69,6 @@ void executeCommand(char *command)
 {
 	pid_t pid;
 	int status;
-	char **env = environ;
-	char *dir;
-	char *path_copy;
-	char *path;
-	char *token;
-	char *args[MAX_ARGUMENTS];
-	int i;
 
 	pid = fork();
 
@@ -86,8 +79,9 @@ void executeCommand(char *command)
 	}
 	else if (pid == 0)
 	{
-		i = 0;
-		token = strtok(command, " ");
+		char *args[MAX_ARGUMENTS];
+		int i = 0;
+		char *token = strtok(command, " ");
 
 		while (token != NULL && i < MAX_ARGUMENTS - 1)
 		{
@@ -98,43 +92,43 @@ void executeCommand(char *command)
 
 		args[i] = NULL;
 
-		if (args[0][0] == '/')
+		if (strcmp(args[0], "ls") == 0)
+		{
+			execve("/usr/bin/ls", args, environ);
+		}
+		else if (strcmp(args[0], "env") == 0)
+		{
+			execve("/usr/bin/env", args, environ);
+		}
+		else if (strcmp(args[0], "touch") == 0)
+		{
+			execve("/usr/bin/touch", args, environ);
+		}
+		else if (strcmp(args[0], "rm") == 0)
+		{
+			execve("/bin/rm", args, environ);
+		}
+		else if (strcmp(args[0], "pwd") == 0)
+		{
+			execve("/bin/pwd", args, environ);
+		}
+		else if (strcmp(args[0], "mv") == 0)
+		{
+			execve("/bin/mv", args, environ);
+		}
+		else if (strcmp(args[0], "cp") == 0)
+		{
+			execve("/bin/cp", args, environ);
+		}
+		else
 		{
 			execve(args[0], args, environ);
+		}
+		if (execve(args[0], args, environ) == -1)
+		{
 			perror("Error executing command");
 			exit(EXIT_FAILURE);
 		}
-
-		path = NULL;
-		for (; *env != NULL; env++)
-		{
-			if (strncmp(*env, "PATH=", 5) == 0)
-			{
-				path = *env + 5;
-				break;
-			}
-		}
-
-		if (path == NULL)
-		{
-			perror("Error with PATH");
-			exit(EXIT_FAILURE);
-		}
-
-		path_copy = strdup(path);
-		dir = strtok(path_copy, ":");
-
-		while (dir != NULL)
-		{
-			char executable[MAX_COMMAND_LENGTH];
-
-			snprintf(executable, sizeof(executable), "%s/%s", dir, args[0]);
-			execve(executable, args, environ);
-			dir = strtok(NULL, ":");
-		}
-		perror("Error executing command");
-		free(path_copy);
-		exit(EXIT_FAILURE);
 	}
 	else
 	{
