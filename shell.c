@@ -69,6 +69,13 @@ void executeCommand(char *command)
 {
 	pid_t pid;
 	int status;
+	char **env = environ;
+	char *dir;
+	char *path_copy;
+	char *path;
+	char *token;
+	char *args[MAX_ARGUMENTS];
+	int i;
 
 	pid = fork();
 
@@ -79,9 +86,8 @@ void executeCommand(char *command)
 	}
 	else if (pid == 0)
 	{
-		char *args[MAX_ARGUMENTS];
-		int i = 0;
-		char *token = strtok(command, " ");
+		i = 0;
+		token = strtok(command, " ");
 
 		while (token != NULL && i < MAX_ARGUMENTS - 1)
 		{
@@ -92,35 +98,36 @@ void executeCommand(char *command)
 
 		args[i] = NULL;
 
-		if (strcmp(args[0], "ls") == 0)
+		path = NULL;
+		for (; *env != NULL; env++)
 		{
-			execve("/usr/bin/ls", args, environ);
+			if (strncmp(*env, "PATH=", 5) == 0)
+			{
+				path = *env + 5;
+				break;
+			}
 		}
-		else if (strcmp(args[0], "env") == 0)
+
+		if (path == NULL)
 		{
-			execve("/usr/bin/env", args, environ);
-		}
-		else if (strcmp(args[0], "touch") == 0)
-		{
-			execve("/usr/bin/touch", args, environ);
-		}
-		else if (strcmp(args[0], "rm") == 0)
-		{
-			execve("/bin/rm", args, environ);
-		}
-		else if (strcmp(args[0], "pwd") == 0)
-		{
-			execve("/bin/pwd", args, environ);
-		}
-		else
-		{
-			execve(args[0], args, environ);
-		}
-		if (execve(args[0], args, environ) == -1)
-		{
-			perror("Error executing command");
+			perror("Error with PATH");
 			exit(EXIT_FAILURE);
 		}
+
+		path_copy = strdup(path);
+		dir = strtok(path_copy, ":");
+
+		while (dir != NULL)
+		{
+			char executable[MAX_COMMAND_LENGTH];
+
+			snprintf(executable, sizeof(executable), "%s/%s", dir, args[0]);
+			execve(executable, args, environ);
+			dir = strtok(NULL, ":");
+		}
+		perror("Error executing command");
+		free(path_copy);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -153,4 +160,3 @@ void open_prompt(void)
 	printf("OzoneLayer$: ");
 	fflush(stdout);
 }
-
