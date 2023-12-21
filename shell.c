@@ -4,40 +4,78 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <signal.h>
+#include "main.h"
 
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
 void executeCommand(char *command);
+void handleCtrlC(int signum);
+void open_prompt(void);
 
+/**
+ * main - takes user input
+ * Return: 0
+ */
 int main(void)
 {
-	char input[MAX_COMMAND_LENGTH];
+	char *input = NULL;
+	size_t input_size = 0;
 
-	while (1)
+	signal(SIGINT, handleCtrlC);
+
+	if (isatty(STDIN_FILENO))
 	{
-		printf("$: ");
-		fgets(input, sizeof(input), stdin);
-
-
-		input[strcspn(input, "\n")] = '\0';
-
-		if (strcmp(input, "exit") == 0)
+		while (1)
 		{
+			open_prompt();
 
-			break;
+			if (getline(&input, &input_size, stdin) == -1)
+			{
+				break;
+			}
+			input[strcspn(input, "\n")] = '\0';
+
+			if (strcmp(input, "exit") == 0)
+			{
+				break;
+			}
+			executeCommand(input);
 		}
-
-		executeCommand(input);
 	}
+	else
+	{
+		while (getline(&input, &input_size, stdin) != -1)
+		{
+			input[strcspn(input, "\n")] = '\0';
 
-	return 0;
+			if (strcmp(input, "exit") == 0)
+			{
+				break;
+			}
+			executeCommand(input);
+		}
+	}
+	free(input);
+	return (0);
 }
 
+/**
+ * executeCommand - executes desired command
+ * @command: the desired command
+ */
 void executeCommand(char *command)
 {
 	pid_t pid;
 	int status;
+	char **env = environ;
+	char *dir;
+	char *path_copy;
+	char *path;
+	char *token;
+	char *args[MAX_ARGUMENTS];
+	int i;
 
 	pid = fork();
 
@@ -48,9 +86,8 @@ void executeCommand(char *command)
 	}
 	else if (pid == 0)
 	{
-		char *args[MAX_ARGUMENTS];
-		int i = 0;
-		char *token = strtok(command, " ");
+		i = 0;
+		token = strtok(command, " ");
 
 		while (token != NULL && i < MAX_ARGUMENTS - 1)
 		{
@@ -60,11 +97,37 @@ void executeCommand(char *command)
 		}
 
 		args[i] = NULL;
-		if (execvp(args[0], args) == -1)
+
+		path = NULL;
+		for (; *env != NULL; env++)
 		{
-			perror("Error executing command");
+			if (strncmp(*env, "PATH=", 5) == 0)
+			{
+				path = *env + 5;
+				break;
+			}
+		}
+
+		if (path == NULL)
+		{
+			perror("Error with PATH");
 			exit(EXIT_FAILURE);
 		}
+
+		path_copy = strdup(path);
+		dir = strtok(path_copy, ":");
+
+		while (dir != NULL)
+		{
+			char executable[MAX_COMMAND_LENGTH];
+
+			snprintf(executable, sizeof(executable), "%s/%s", dir, args[0]);
+			execve(executable, args, environ);
+			dir = strtok(NULL, ":");
+		}
+		perror("Error executing command");
+		free(path_copy);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -76,3 +139,24 @@ void executeCommand(char *command)
 	}
 }
 
+/**
+ * handleCtrlC - handle Ctrl+C signal
+ * @signum: signal number
+ */
+void handleCtrlC(int signum)
+{
+	(void) signum;
+	write(STDOUT_FILENO, "\n", 1);
+	open_prompt();
+}
+
+/**
+ * open_prompt - function that opens prompt
+ * Return: returns nothing
+ */
+
+void open_prompt(void)
+{
+	printf("OzoneLayer$: ");
+	fflush(stdout);
+}
