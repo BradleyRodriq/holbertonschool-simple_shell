@@ -112,6 +112,14 @@ void executeCommand(char *command)
 		{
 			execve("/bin/pwd", args, environ);
 		}
+		else if (strcmp(args[0], "mv") == 0)
+		{
+			execve("/bin/mv", args, environ);
+		}
+		else if (strcmp(args[0], "cp") == 0)
+		{
+			execve("/bin/cp", args, environ);
+		}
 		else
 		{
 			execve(args[0], args, environ);
