@@ -98,6 +98,13 @@ void executeCommand(char *command)
 
 		args[i] = NULL;
 
+		if (args[0][0] == '/')
+		{
+			execve(args[0], args, environ);
+			perror("Error executing command");
+			exit(EXIT_FAILURE);
+		}
+
 		path = NULL;
 		for (; *env != NULL; env++)
 		{
