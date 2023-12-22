@@ -175,6 +175,18 @@ void runExecve(char *command, char *args[])
 	{
 		execve("/bin/echo", args, environ);
 	}
+	else if (strcmp(args[0], "cat") == 0)
+	{
+		execve("/bin/cat", args, environ);
+	}
+	else if (strcmp(args[0], "vim") == 0)
+	{
+		execve("/bin/vim", args, environ);
+	}
+	else if (strcmp(args[0], "less") == 0)
+	{
+		execve("/bin/less", args, environ);
+	}
 	else
 	{
 		execve(args[0], args, environ);
