@@ -63,7 +63,7 @@ int main(void)
 }
 
 /**
- * executeCommand - executes desired command
+ * CMDexe - executes desired command and calls execve function
  * @command: the desired command
  */
 void CMDexe(char *command)
@@ -93,7 +93,7 @@ void CMDexe(char *command)
 
 		args[i] = NULL;
 
-		runExecve(command, args);
+		runExecve(args[0], args);
 
 		perror("Error executing command");
 		exit(EXIT_FAILURE);
@@ -109,7 +109,7 @@ void CMDexe(char *command)
 }
 
 /**
- * handleCtrlC - handle Ctrl+C signal
+ * handleSIGINT - handle Ctrl+C signal
  * @signum: signal number
  */
 void handleSIGINT(int signum)

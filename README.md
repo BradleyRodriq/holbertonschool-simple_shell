@@ -48,37 +48,35 @@ If you want to try the project follow the next steps.
 2. Compiler command
 
     ```sh
-    gcc -Wall -Werror -pedantic shell.c -o shell
-   ```
+    gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+    ```
 3. Run _.exec_
     ```sh
-    ./shell
+    ./hsh
    ```
 </br>
 
 <!-- CODE EXPLANATION -->
 ##  Code
 ```
-// loops and waits for user input.
+// this function loops and waits for user input.
 void main(void);
 
-// This function takes the desirable command as a paramater and execute it.
-void executeCommand(char *command);
+// this function takes the desirable command as a paramater and execute it.
+void CMDexe(char *command);
+
+// this function handles SIGINT signal
+void handleSIGINT(int signum)
+
+// this function opens the prompt
+void open_prompt(void)
+
+// this function executes the command
+void runExecve(char *command, char *args[])
 ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-Use the project just for educational purposes only.
-
-
-<!-- LICENSE -->
-## License
-Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Authors
-- Brandley Rodriguez <bradley.rodriguez2@yahoo.com>
+- Brandley A. Rodriguez <bradley.rodriguez2@yahoo.com>
 - Jahaziel A. Serrano <serranojahaziel2@gmail.com>
 - Luis Rivera <6898@holbertonstudents.com>

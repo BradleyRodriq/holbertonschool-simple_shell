@@ -1,21 +1,38 @@
 .TH shell "12/18/2023" "1.0.0" "A Shell Emulator"
 .SH shell
-shell \- is a C Program that emulates a linux base shell. It can perfom ls, pwd, topuch & echoa a the moment. 
+shell \- is a C Program that emulates a linux base shell.
 
 .SH SYNOPSIS
-void executeCommand(char *command);
+
+This program opens a prompt, and will emulate a simple shell with the functions specified
+in the DESCRIPTIONS section.
+
+.SH DIRECTIONS
+
+After cloning repository into your machine,
+compile program with <gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh>
 
 .SH DESCRIPTION
-shell is a C Program that emulates a linux base shell. After comiplation type ./shell. Then use any command listed.
+After comiplation type ./hsh Then use any command listed
+
 - ls :- display a list of files
 - pwd :- dispay the current working directiry
 - touch [file_name] :- create a empty file
-- echo [message] :- display message 
+- echo [message] :- display message with a new line ender
+- env :- set each NAME to VALUE in the environment and run COMMAND
+- rm [file_name] :- removes specified file
+- mv [first_file_name] [second_file_name] :- moves or renames first file into second file
+- cp [first_file_name] [second_file_name] :- copies content of first file into second file
+- printf [message] :- display message without a new line ender
 
-.SH AUTHOR
-Brandley Rodriguez <bradley.rodriguez2@yahoo.com>
-Jahaziel A. Serrano <serranojahaziel2@gmail.com>
-Luis Rivera <__>
+.SH LIMITATIONS
+cd [command] :- Other commands are not currently supported, and will not run them.
 
 .SH BUGS
-cd [command] :- It do not perfom as intended
+
+For bug reports, contact any of the developers at:
+
+Brandley A. Rodriguez <bradley.rodriguez2@yahoo.com>
+Jahaziel A. Serrano <serranojahaziel2@gmail.com>
+Luis Rivera <6898@holbertonstudents.com>
+
