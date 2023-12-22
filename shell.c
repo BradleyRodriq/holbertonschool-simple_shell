@@ -120,6 +120,14 @@ void executeCommand(char *command)
 		{
 			execve("/bin/cp", args, environ);
 		}
+		else if (strcmp(args[0], "printf") == 0)
+		{
+			execve("/bin/printf", args, environ);
+		}
+		else if (strcmp(args[0], "echo") == 0)
+		{
+			execve("/bin/echo", args, environ);
+		}
 		else
 		{
 			execve(args[0], args, environ);
