@@ -10,8 +10,9 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
-void executeCommand(char *command);
-void handleCtrlC(int signum);
+void CMDexe(char *command);
+void runExecve(char *command, char *args[]);
+void handleSIGINT(int signum);
 void open_prompt(void);
 
 /**
@@ -23,7 +24,7 @@ int main(void)
 	char *input = NULL;
 	size_t input_size = 0;
 
-	signal(SIGINT, handleCtrlC);
+	signal(SIGINT, handleSIGINT);
 
 	if (isatty(STDIN_FILENO))
 	{
@@ -41,7 +42,7 @@ int main(void)
 			{
 				break;
 			}
-			executeCommand(input);
+			CMDexe(input);
 		}
 	}
 	else
@@ -54,7 +55,7 @@ int main(void)
 			{
 				break;
 			}
-			executeCommand(input);
+			CMDexe(input);
 		}
 	}
 	free(input);
@@ -65,7 +66,7 @@ int main(void)
  * executeCommand - executes desired command
  * @command: the desired command
  */
-void executeCommand(char *command)
+void CMDexe(char *command)
 {
 	pid_t pid;
 	int status;
@@ -92,51 +93,10 @@ void executeCommand(char *command)
 
 		args[i] = NULL;
 
-		if (strcmp(args[0], "ls") == 0)
-		{
-			execve("/usr/bin/ls", args, environ);
-		}
-		else if (strcmp(args[0], "env") == 0)
-		{
-			execve("/usr/bin/env", args, environ);
-		}
-		else if (strcmp(args[0], "touch") == 0)
-		{
-			execve("/usr/bin/touch", args, environ);
-		}
-		else if (strcmp(args[0], "rm") == 0)
-		{
-			execve("/bin/rm", args, environ);
-		}
-		else if (strcmp(args[0], "pwd") == 0)
-		{
-			execve("/bin/pwd", args, environ);
-		}
-		else if (strcmp(args[0], "mv") == 0)
-		{
-			execve("/bin/mv", args, environ);
-		}
-		else if (strcmp(args[0], "cp") == 0)
-		{
-			execve("/bin/cp", args, environ);
-		}
-		else if (strcmp(args[0], "printf") == 0)
-		{
-			execve("/bin/printf", args, environ);
-		}
-		else if (strcmp(args[0], "echo") == 0)
-		{
-			execve("/bin/echo", args, environ);
-		}
-		else
-		{
-			execve(args[0], args, environ);
-		}
-		if (execve(args[0], args, environ) == -1)
-		{
-			perror("Error executing command");
-			exit(EXIT_FAILURE);
-		}
+		runExecve(command, args);
+
+		perror("Error executing command");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -152,7 +112,7 @@ void executeCommand(char *command)
  * handleCtrlC - handle Ctrl+C signal
  * @signum: signal number
  */
-void handleCtrlC(int signum)
+void handleSIGINT(int signum)
 {
 	(void) signum;
 	write(STDOUT_FILENO, "\n", 1);
@@ -168,4 +128,60 @@ void open_prompt(void)
 {
 	printf("OzoneLayer$: ");
 	fflush(stdout);
+}
+
+/**
+ * runExecve - handles execve to run commands from bin
+ * @command: the command to be handled
+ * @args: the arguments to be handled
+ */
+void runExecve(char *command, char *args[])
+{
+	(void) command;
+
+	if (strcmp(args[0], "ls") == 0)
+	{
+		execve("/usr/bin/ls", args, environ);
+	}
+	else if (strcmp(args[0], "env") == 0)
+	{
+		execve("/usr/bin/env", args, environ);
+	}
+	else if (strcmp(args[0], "touch") == 0)
+	{
+		execve("/usr/bin/touch", args, environ);
+	}
+	else if (strcmp(args[0], "rm") == 0)
+	{
+		execve("/bin/rm", args, environ);
+	}
+	else if (strcmp(args[0], "pwd") == 0)
+	{
+		execve("/bin/pwd", args, environ);
+	}
+	else if (strcmp(args[0], "mv") == 0)
+	{
+		execve("/bin/mv", args, environ);
+	}
+	else if (strcmp(args[0], "cp") == 0)
+	{
+		execve("/bin/cp", args, environ);
+	}
+	else if (strcmp(args[0], "printf") == 0)
+	{
+		execve("/bin/printf", args, environ);
+	}
+	else if (strcmp(args[0], "echo") == 0)
+	{
+		execve("/bin/echo", args, environ);
+	}
+	else
+	{
+		execve(args[0], args, environ);
+	}
+	if (execve(args[0], args, environ) == -1)
+	{
+		perror("Error executing command");
+		exit(EXIT_FAILURE);
+	}
 }
